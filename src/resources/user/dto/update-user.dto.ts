@@ -21,15 +21,6 @@ export class UpdateUserDto {
   email?: string
 
   @ApiProperty({
-    example: '123456',
-    description: 'Senha do usuário',
-    required: false,
-  })
-  @IsString()
-  @IsOptional()
-  password?: string
-
-  @ApiProperty({
     example: false,
     description: 'Define se o usuário é administrador',
   })
