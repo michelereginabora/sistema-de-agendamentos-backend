@@ -10,6 +10,12 @@ O objetivo é mostrar habilidades em:
 
 O sistema visa ser robusto, escalável e seguir boas práticas de desenvolvimento. 🚀
 
+## 📖 Documentação  
+
+- Acesse a documentação da API via **Swagger**: [http://localhost:{sua-porta}/docs#/](http://localhost:{sua-porta}/docs#/)  
+- Consulte a documentação do código: [DOC.md](https://github.com/michelereginabora/sistema-de-agendamentos-backend/blob/main/DOC.md)  
+
+
 -----------
 
 ## **📌 Schedule Manager - Setup Local com Docker**
