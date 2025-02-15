@@ -4,6 +4,6 @@ export interface LoginResult {
 
 export interface JwtPayload {
   email: string;
-  sub: number;
+  sub: string;
   isAdmin: boolean;
 }
