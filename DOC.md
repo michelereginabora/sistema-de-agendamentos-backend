@@ -52,12 +52,17 @@ O arquivo `jwt.strategy.ts` implementa a estratégia de autenticação JWT:
 - Disponibiliza os dados do usuário para a aplicação
 
 ### JWT Auth Guard
-Em `jwt-auth.guard.ts`, o guard de autenticação:
 - Intercepta requisições
 - Verifica a existência e validade do token JWT
-- Gerencia o acesso:
+
+Em `jwt-auth.guard.ts`, o guard de autenticação:
+Gerencia o acesso:
   - Permite acesso se o token for válido
   - Retorna erro 401 (Unauthorized) se inválido
+
+Em admin.guard.ts
+Gerencia o acesso:
+- Permite apenas usuários admins
 
 ### Interfaces de Autenticação
 O arquivo `auth.interfaces.ts` define:
@@ -86,6 +91,8 @@ Em `auth.service.ts`, são implementados:
 - Serviço
 - Interfaces
 
+--------------------
+
 ## Módulo de Usuários (User)
 
 ### Entidade User
@@ -102,7 +109,7 @@ CREATE TABLE user (
 ```
 
 ### Serviço de Usuários
-Implementa operações CRUD e funcionalidades extras:
+Implementa métodos CRUD e funcionalidades extras:
 
 #### Métodos
 1. **create**
@@ -140,3 +147,37 @@ Características principais:
 - Validação de entrada via DTOs
 - Operações assíncronas (Promises)
 - Conformidade com padrões RESTful
+
+--------------------
+
+## Módulo de Serviços (Services)
+
+### Entidade User
+Estrutura da tabela no banco de dados:
+```sql
+CREATE TABLE services (
+ id UUID PRIMARY KEY,
+ name VARCHAR(100) NOT NULL,
+ duration INT NOT NULL, -- em minutos
+ price DECIMAL(10,2)
+);
+```
+### Serviço de Services
+Fornece dois métodos principais:
+- findAll(): Retorna todos os serviços cadastrados
+- create(): Cria um novo serviço usando os dados fornecidos
+
+### Controllers de Services
+Implementa duas rotas:
+
+- GET /services
+Pública (não requer autenticação)
+Retorna todos os serviços cadastrados
+
+- POST /services
+Protegida (requer autenticação)
+Requer que o usuário seja admin
+Aceita dados no corpo da requisição para criar um novo serviço
+Valida os dados recebidos usando o CreateServiceDto
+
+-------------------
