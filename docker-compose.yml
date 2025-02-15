@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  schedule_manager:
+    build: .
+    container_name: schedule_manager_app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - mongo
+    env_file:
+      - .env
+    networks:
+      - schedule_network
+
+  postgres:
+    image: postgres:15
+    container_name: schedule_manager_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    networks:
+      - schedule_network
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo:6
+    container_name: schedule_manager_mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    networks:
+      - schedule_network
+    volumes:
+      - mongodata:/data/db
+
+networks:
+  schedule_network:
+
+volumes:
+  pgdata:
+  mongodata:

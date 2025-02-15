@@ -1,99 +1,132 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# **SISTEMA DE AGENDAMENTOS - API**  
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este projeto é um **Desafio Técnico** para o desenvolvimento de um **Sistema de Agendamentos**, onde usuários podem marcar horários para serviços específicos.  
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+O objetivo é mostrar habilidades em:  
+✅ **NestJS** para construção da API (backend)  
+✅ **React/Next.js** para a interface do usuário (frontend)  
+✅ **Modelagem de banco de dados** com **PostgreSQL** e **MongoDB**  
+✅ **Implementação de regras de negócio** para garantir um fluxo seguro e eficiente  
 
-## Description
+O sistema visa ser robusto, escalável e seguir boas práticas de desenvolvimento. 🚀
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+-----------
 
-## Project setup
+## **📌 Schedule Manager - Setup Local com Docker**
 
-```bash
-$ npm install
+Este projeto é uma aplicação **NestJS** que utiliza **PostgreSQL** e **MongoDB** como bancos de dados, rodando via **Docker Compose**.
+
+---
+
+## **🔧 Pré-requisitos**
+Antes de começar, certifique-se de ter instalado:
+
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Node.js 22+](https://nodejs.org/)
+- [pnpm](https://pnpm.io/) (ou `npm` / `yarn`)
+
+---
+
+## **🚀 Rodando o Projeto**
+### **1️⃣ Clone o Repositório**
+```sh
+git clone https://github.com/michelereginabora/sistema-de-agendamentos-backend.git
+cd sistema-de-agendamentos-backend
 ```
 
-## Compile and run the project
+### **2️⃣ Configure as Variáveis de Ambiente**
+Crie um arquivo **`.env`** na raiz do projeto com o seguinte conteúdo (ou apenas copie o .env.local):
 
-```bash
-# development
-$ npm run start
+```ini
+# Banco de Dados PostgreSQL
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=admin
+POSTGRES_DB=schedule_db
 
-# watch mode
-$ npm run start:dev
+# Banco de Dados MongoDB
+MONGO_URL=mongodb://mongo:27017/schedule_db
 
-# production mode
-$ npm run start:prod
+# URL do Banco PostgreSQL
+DATABASE_URL=postgresql://postgres:admin@postgres:5432/schedule_db
 ```
 
-## Run tests
+---
 
-```bash
-# unit tests
-$ npm run test
+### **3️⃣ Suba os Containers com Docker**
+Agora, rode o seguinte comando para subir os containers:
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```sh
+docker-compose up -d
 ```
 
-## Deployment
+Isso irá:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+✅ Criar os containers do **NestJS**, **PostgreSQL** e **MongoDB**  
+✅ Configurar os bancos de dados automaticamente  
+✅ Disponibilizar a API em **http://localhost:3000**
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+---
 
-```bash
-$ npm install -g mau
-$ mau deploy
+### **4️⃣ Acesse os Bancos de Dados**
+- **PostgreSQL**
+  - **Host:** `localhost`
+  - **Porta:** `5432`
+  - **Usuário:** `postgres`
+  - **Senha:** `admin`
+  - **Banco:** `schedule_db`
+  - **GUI:** Use o [pgAdmin](https://www.pgadmin.org/) ou [DBeaver](https://dbeaver.io/)
+
+- **MongoDB**
+  - **Host:** `localhost`
+  - **Porta:** `27017`
+  - **Banco:** `schedule_db`
+  - **GUI:** Use o [MongoDB Compass](https://www.mongodb.com/try/download/compass)
+
+---
+
+## **🛠️ Comandos Úteis**
+📌 **Ver logs do NestJS**  
+```sh
+docker logs -f schedule_manager_app
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+📌 **Acessar o container do PostgreSQL**  
+```sh
+docker exec -it schedule_manager_postgres psql -U postgres -d schedule_db
+```
 
-## Resources
+📌 **Acessar o container do MongoDB**  
+```sh
+docker exec -it schedule_manager_mongo mongosh
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+📌 **Derrubar os containers**  
+```sh
+docker-compose down
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+📌 **Recriar os containers do zero**  
+```sh
+docker-compose down -v
+docker-compose up --build -d
+```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## **✅ Testando a API**
+Após subir o projeto, teste a API no navegador ou com **cURL**:
 
-## Stay in touch
+```sh
+curl http://localhost:3000/
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Ou use o **Postman** / **Insomnia** para testar as rotas da aplicação.
 
-## License
+---
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## **📚 Referências**
+- [NestJS](https://nestjs.com/)
+- [Docker](https://www.docker.com/)
+- [PostgreSQL](https://www.postgresql.org/)
+- [MongoDB](https://www.mongodb.com/)
