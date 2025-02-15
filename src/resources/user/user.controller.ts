@@ -13,6 +13,7 @@ import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('users')
 export class UserController {
@@ -24,17 +25,21 @@ export class UserController {
   }
   
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Get()
   findAll(): Promise<User[]> {
     return this.userService.findAll();
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Get(':id')
   findOne(@Param('id') id: number): Promise<User | null> {
     return this.userService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Put(':id')
   update(
     @Param('id') id: number,
@@ -44,6 +49,7 @@ export class UserController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @Delete(':id')
   remove(@Param('id') id: number): Promise<void> {
     return this.userService.remove(id);
