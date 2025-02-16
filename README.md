@@ -40,9 +40,12 @@ Crie um arquivo **`.env`** na raiz do projeto com o seguinte conteúdo (ou apena
 
 ```ini
 # Banco de Dados PostgreSQL
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=admin
-POSTGRES_DB=schedule_db
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USERNAME=postgres
+DATABASE_PASSWORD=admin
+DATABASE_NAME=schedule_db
+DATABASE_SYNCHRONIZE=true
 
 # Banco de Dados MongoDB
 MONGO_URL=mongodb://mongo:27017/schedule_db
