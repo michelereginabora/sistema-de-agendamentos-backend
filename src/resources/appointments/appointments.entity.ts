@@ -16,11 +16,11 @@ export class Appointment {
   id: string
 
   @Column({ name: 'user_id', type: 'uuid' })
-  userId: string;
+  userId: string
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
-  user: User;
+  user: User
 
   @Column({ name: 'service_id', type: 'uuid' })
   serviceId: string

@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { Type } from 'class-transformer';
+import { Type } from 'class-transformer'
 import { IsUUID, IsDate, IsNotEmpty } from 'class-validator'
 
 export class CreateAppointmentDto {
@@ -12,11 +12,11 @@ export class CreateAppointmentDto {
   serviceId: string
 
   @ApiProperty({
-    example: '2024-02-16T14:30:00.000Z',
+    example: '2025-02-16 14:30',
     description: 'Data e horário do agendamento',
   })
   @IsNotEmpty()
   @Type(() => Date)
   @IsDate()
-  appointmentDate: Date;
+  appointmentDate: Date
 }

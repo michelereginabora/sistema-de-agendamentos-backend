@@ -30,7 +30,11 @@ export class AppointmentService {
     const appointmentDate = new Date(appointmentData.appointmentDate)
     this.validateAppointmentDate(appointmentDate)
 
-    await this.validateExistingUserAppointment(userId, serviceId, appointmentDate)
+    await this.validateExistingUserAppointment(
+      userId,
+      serviceId,
+      appointmentDate
+    )
 
     await this.validateExistingServiceAppointment(
       appointmentData.serviceId,
@@ -41,9 +45,9 @@ export class AppointmentService {
       userId,
       serviceId,
       appointmentDate,
-    });
+    })
   }
-  
+
   private async validateUser(userId: string) {
     const user = await this.appointmentRepository.findOne({
       where: { userId },
@@ -72,65 +76,68 @@ export class AppointmentService {
     }
   }
 
-  private async calculateAppointmentEndTime(
-    appointment: Appointment
-  ): Promise<Date> {
-    const appointmentEndTime = new Date(appointment.appointmentDate);
-    appointmentEndTime.setMinutes(appointmentEndTime.getMinutes() + appointment.service.duration);
-    return appointmentEndTime;
+  private calculateAppointmentEndTime(appointment: Appointment): Date {
+    const appointmentEndTime = new Date(appointment.appointmentDate)
+    appointmentEndTime.setMinutes(
+      appointmentEndTime.getMinutes() + appointment.service.duration
+    )
+    return appointmentEndTime
   }
-   
+
   private async validateExistingUserAppointment(
     userId: string,
     serviceId: string,
     appointmentDate: Date
   ): Promise<void> {
-    await this.validateService(serviceId);
+    await this.validateService(serviceId)
 
-    const existingAppointments = await this.appointmentRepository.createQueryBuilder('appointment')
+    const existingAppointments = await this.appointmentRepository
+      .createQueryBuilder('appointment')
       .leftJoinAndSelect('appointment.service', 'service')
       .where('appointment.userId = :userId', { userId })
-      .getMany();
+      .getMany()
 
-    for (const existingAppointment  of existingAppointments) {
-      const existingAppointmentEndTime  = await this.calculateAppointmentEndTime(existingAppointment);
+    for (const existingAppointment of existingAppointments) {
+      const existingAppointmentEndTime =
+        this.calculateAppointmentEndTime(existingAppointment)
 
       if (
-       appointmentDate >= existingAppointment .appointmentDate &&
-       appointmentDate < existingAppointmentEndTime 
+        appointmentDate >= existingAppointment.appointmentDate &&
+        appointmentDate < existingAppointmentEndTime
       ) {
         throw new BadRequestException(
           `Usuário já possui o agendamento ${existingAppointment.service?.name} para esse horário`
         )
       }
     }
-}
-  
-private async validateExistingServiceAppointment(
-  serviceId: string,
-  appointmentDate: Date
-): Promise<void> {
-  await this.validateService(serviceId);
+  }
 
-  const existingAppointments = await this.appointmentRepository
-    .createQueryBuilder('appointment')
-    .leftJoinAndSelect('appointment.service', 'service')
-    .where('appointment.serviceId = :serviceId', { serviceId })
-    .getMany();
+  private async validateExistingServiceAppointment(
+    serviceId: string,
+    appointmentDate: Date
+  ): Promise<void> {
+    await this.validateService(serviceId)
 
-  for (const existingAppointment of existingAppointments) {
-    const existingAppointmentEndTime = await this.calculateAppointmentEndTime(existingAppointment);
+    const existingAppointments = await this.appointmentRepository
+      .createQueryBuilder('appointment')
+      .leftJoinAndSelect('appointment.service', 'service')
+      .where('appointment.serviceId = :serviceId', { serviceId })
+      .getMany()
 
-    if (
-      appointmentDate >= existingAppointment.appointmentDate && 
-      appointmentDate < existingAppointmentEndTime
-    ) {
-      throw new BadRequestException(
-        'Serviço não está disponível para esse horário'
-      );
+    for (const existingAppointment of existingAppointments) {
+      const existingAppointmentEndTime =
+        this.calculateAppointmentEndTime(existingAppointment)
+
+      if (
+        appointmentDate >= existingAppointment.appointmentDate &&
+        appointmentDate < existingAppointmentEndTime
+      ) {
+        throw new BadRequestException(
+          'Serviço não está disponível para esse horário'
+        )
+      }
     }
   }
-}
   async findUserAppointments(userId: string) {
     return this.appointmentRepository.find({
       where: { userId },
