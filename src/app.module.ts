@@ -5,6 +5,7 @@ import { UserModule } from './resources/user/user.module';
 import { PostgresModule } from './database/postgres/postgres.module';
 import { AuthModule } from './auth/auth.module';
 import { ServicesModule } from './resources/services/services.module';
+import { AppointmentsModule } from './resources/appointments/appointments.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { ServicesModule } from './resources/services/services.module';
     UserModule,
     AuthModule,
     ServicesModule,
+    AppointmentsModule,
   ],
 })
 export class AppModule {}
