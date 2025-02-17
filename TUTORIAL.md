@@ -46,7 +46,9 @@ Resposta esperada (200 OK):
 
 ## 3. Criando um Serviço
 
+Certifique-se de que o usuário tem permissões de admin
 Adicione o token no header: `Authorization: Bearer {seu-token}`
+
 
 ```json
 POST /services
@@ -69,24 +71,61 @@ Resposta esperada (201 Created):
 
 ## 4. Agendando um Serviço
 
-Adicione o token no header: `Authorization: Bearer {seu-token}`
+Primeiro, adicione o token de autenticação no header da requisição: `Authorization: Bearer {seu-token}`
 
+
+### Verificando disponibilidade
+Para verificar os horários disponíveis, faça uma requisição GET para o endpoint de disponibilidade com os parâmetros serviceId e date:
+
+Exemplo:
+```http
+GET http://localhost:3000/availability?serviceId=8ac99ae7-f9b5-4754-8213-209075d37754&date=2025-02-17
+```
+
+Você receberá uma resposta com os horários disponíveis:
 ```json
-POST /appointments
 {
-  "serviceId": "uuid-do-servico",
-  "appointmentDate": "2025-09-20 17:50:00"
+    "serviceName": "Massagem",
+    "appointmentDate": "2025-02-17T00:00:00.000Z",
+    "availableSlots": [
+        {
+            "start": "09:00",
+            "end": "10:20"
+        },
+        {
+            "start": "09:30",
+            "end": "10:50"
+        },
+        // ... outros horários disponíveis
+        {
+            "start": "16:30",
+            "end": "17:50"
+        }
+    ]
 }
 ```
 
-Resposta esperada (201 Created):
+### Realizando o agendamento
+Após escolher um horário disponível, faça o agendamento:
+
+```http
+POST /appointments
+Content-Type: application/json
+
+{
+    "serviceId": "uuid-do-servico",
+    "appointmentDate": "2025-09-20 17:50:00"
+}
+```
+
+Em caso de sucesso, você receberá uma resposta com status 201 Created:
 ```json
 {
-  "id": "uuid-gerado",
-  "userId": "seu-user-id",
-  "serviceId": "uuid-do-servico",
-  "appointmentDate": "2025-09-20T20:50:00.000Z",
-  "createdAt": "horário atual em UTC"
+    "id": "uuid-gerado",
+    "userId": "seu-user-id",
+    "serviceId": "uuid-do-servico",
+    "appointmentDate": "2025-09-20T20:50:00.000Z",
+    "createdAt": "horário atual em UTC"
 }
 ```
 
