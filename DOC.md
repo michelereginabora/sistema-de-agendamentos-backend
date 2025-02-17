@@ -259,3 +259,59 @@ Lançada quando há violações nas regras de negócio:
 
 #### NotFoundException
 Lançada quando o serviço solicitado não existe.
+
+## Módulo de Disponibilidade de Horários (availability)
+
+### Serviço de Availability
+O AvailabilityService é responsável por gerenciar e calcular os horários disponíveis para agendamentos de serviços. Ele lida com a lógica de negócio para determinar quando os serviços podem ser agendados, baseando-se no horário comercial e nos agendamentos existentes.
+
+### Regras de Negócio
+- Horário comercial fixo das 9:00 às 18:00
+- Duração padrão do slot é de 30 minutos
+- Agendamentos não podem se sobrepor
+- A duração do serviço deve ser respeitada ao calcular slots disponíveis
+- Agendamentos não podem ultrapassar o horário comercial
+
+### Métodos Principais
+
+#### findAvailableSlots()
+Método principal para encontrar horários disponíveis para um serviço específico em uma data determinada.
+
+**Parâmetros:**
+- serviceId: Identificador único do serviço
+- date: Data para verificar disponibilidade
+
+**Retorna:**
+- serviceName: Nome do serviço solicitado
+- appointmentDate: Data solicitada
+- availableSlots: Array de horários disponíveis
+
+#### calculateAvailableSlots()
+Lógica principal para calcular slots de tempo disponíveis.
+- Respeita o horário comercial (9:00-18:00)
+- Cria slots em intervalos de 30 minutos
+- Previne sobreposição de agendamentos
+- Garante que slots não ultrapassem o horário comercial
+- Considera a duração do serviço ao calcular disponibilidade
+- Verifica conflitos com agendamentos existentes
+
+#### getServiceAppointments()
+Recupera todos os agendamentos para um serviço específico em uma data determinada.
+- Filtra agendamentos por ID do serviço e data
+- Retorna agendamentos ordenados por data em ordem crescente
+- Inclui informações relacionadas ao serviço através de join
+
+### Métodos de Validação e Utilitários
+
+#### validateService()
+Método interno para validar a existência do serviço.
+
+#### normalizeBookedSlots()
+Converte datas de agendamento em slots de tempo normalizados.
+- Converte horários de agendamento para formato baseado em minutos para facilitar cálculo
+- Considera a duração do serviço ao calcular horários de término
+- Retorna array de slots com horários de início e fim em minutos
+
+#### minutesToTime()
+Método utilitário para converter minutos em string de tempo formatada.
+
