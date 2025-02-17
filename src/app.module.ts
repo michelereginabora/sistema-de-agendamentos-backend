@@ -6,6 +6,7 @@ import { PostgresModule } from './database/postgres/postgres.module';
 import { AuthModule } from './auth/auth.module';
 import { ServicesModule } from './resources/services/services.module';
 import { AppointmentsModule } from './resources/appointments/appointments.module';
+import { AvailabilityModule } from './resources/availability/availability.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { AppointmentsModule } from './resources/appointments/appointments.module
     AuthModule,
     ServicesModule,
     AppointmentsModule,
+    AvailabilityModule
   ],
 })
 export class AppModule {}
