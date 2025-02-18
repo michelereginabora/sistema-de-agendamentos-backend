@@ -4,7 +4,7 @@ import { Appointment } from './appointments.entity'
 import { AppointmentController } from './appointments.controller'
 import { AppointmentService } from './appointments.service'
 import { Service } from 'src/resources/services/service.entity'
-import { User } from '../user/user.entity'
+import { User } from '../user/entities/user.entity'
 
 @Module({
   imports: [TypeOrmModule.forFeature([Appointment, Service, User])],

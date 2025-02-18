@@ -20,11 +20,14 @@ export class UpdateUserDto {
   @IsOptional()
   email?: string
 
+  // TODO: Restringir alteração de permissões administrativas apenas para administradores.
+  // Temporariamente liberado para facilitar testes de desenvolvimento.
   @ApiProperty({
     example: false,
     description: 'Define se o usuário é administrador',
   })
   @IsBoolean()
+  @IsOptional()
   isAdmin: boolean
 
   @ApiProperty({
