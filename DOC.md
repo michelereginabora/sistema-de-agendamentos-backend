@@ -2,6 +2,8 @@
 
 ## Índice
 
+# Índice
+
 1. [Estrutura do Projeto](#estrutura-do-projeto)
    - [Visão Geral da Estrutura de Diretórios](#visão-geral-da-estrutura-de-diretórios)
      - [src/auth/](#srcauth)
@@ -21,6 +23,8 @@
    - [Entidade User](#entidade-user)
    - [Serviço de Usuários](#serviço-de-usuários)
    - [Controller de Usuários](#controller-de-usuários)
+   - [Interfaces](#interfaces)
+   - [Repositories](#repositories)
 
 4. [Módulo de Serviços](#módulo-de-serviços-services)
    - [Entidade Services](#entidade-services)
@@ -34,6 +38,12 @@
    - [Métodos Principais](#métodos-principais)
    - [Métodos de Validação](#métodos-de-validação)
    - [Exceções](#exceções)
+
+6. [Módulo de Disponibilidade de Horários](#módulo-de-disponibilidade-de-horários-availability)
+   - [Serviço de Availability](#serviço-de-availability)
+   - [Regras de Negócio](#regras-de-negócio-1)
+   - [Métodos Principais](#métodos-principais-1)
+   - [Métodos de Validação e Utilitários](#métodos-de-validação-e-utilitários)
 
 ## Estrutura do Projeto
 
@@ -58,11 +68,14 @@ Configurações e conexões com bancos de dados:
 #### src/resources/
 Recursos da aplicação:
 
-- **user/**
-  - Controllers
-  - Services
-  - DTOs
-  - Entities
+  - controllers
+  - dto
+  - entities
+  - interfaces
+  - repositories
+  - services
+  e module
+
 
 #### src/utils/
 Utilitários, types, interfaces e funções auxiliares:
@@ -163,7 +176,7 @@ Implementa métodos CRUD e funcionalidades extras:
    - Sem retorno de dados
 
 **Segurança:**
-- Hashing de senha
+- Serviço separado para Hashing de senha que utiliza o util hashPassword 'src/utils/hash'
 - Validação via DTOs
 - Operações assíncronas
 
@@ -172,6 +185,26 @@ Características principais:
 - Proteção de rotas com JwtAuthGuard
 - Validação de entrada via DTOs
 - Operações assíncronas (Promises)
+
+### Interfaces
+- IUser
+Define a estrutura base de um usuário no sistema
+
+- IUserResponse
+Define o formato de resposta ao cliente (sem dados sensíveis)
+
+- IUserRepository
+Define os métodos para manipulação de dados do usuário
+
+- IPasswordHasher
+Interface que define os métodos para manipulação de senha
+
+### Repositories
+- UserRepository
+Implementa a interface IUserRepository usando TypeORM
+Implementa a camada de persistência, encapsulando a lógica de acesso ao banco e validações de dados como verificação de email duplicado
+
+______________________________________________________________
 
 ## Módulo de Serviços (Services)
 
@@ -204,6 +237,8 @@ Implementa duas rotas:
   - Requer que o usuário seja admin
   - Aceita dados no corpo da requisição para criar um novo serviço
   - Valida os dados recebidos usando o CreateServiceDto
+
+__________________________________________________________________________
 
 ## Módulo de Agendamento
 
@@ -259,6 +294,8 @@ Lançada quando há violações nas regras de negócio:
 
 #### NotFoundException
 Lançada quando o serviço solicitado não existe.
+
+________________________________________________________________________________
 
 ## Módulo de Disponibilidade de Horários (availability)
 
