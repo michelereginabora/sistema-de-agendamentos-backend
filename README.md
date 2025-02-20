@@ -1,12 +1,14 @@
-# **SISTEMA DE AGENDAMENTOS - API**  
+# **📌 SISTEMA DE AGENDAMENTOS - API**  
 
 Este projeto é um **Desafio Técnico** para o desenvolvimento de um **Sistema de Agendamentos**, onde usuários podem marcar horários para serviços específicos.  
 
-O objetivo é mostrar habilidades em:   
-✅ **NestJS** para construção da API (backend)   
-✅ **React/Next.js** para a interface do usuário ([frontend](https://github.com/michelereginabora/sistema-de-agendamentos-frontend))
-✅ **Modelagem de banco de dados** com **PostgreSQL**
+### O objetivo é mostrar habilidades em:
+
+✅ **NestJS** para construção da API (backend)  
+✅ **React/Next.js** para a interface do usuário ([frontend](https://github.com/michelereginabora/sistema-de-agendamentos-frontend))  
+✅ **Modelagem de banco de dados** com **PostgreSQL**  e TypeORM
 ✅ **Implementação de regras de negócio** para garantir um fluxo seguro e eficiente
+
 
 O sistema visa ser robusto, escalável e seguir boas práticas de desenvolvimento. 🚀
 
@@ -24,23 +26,16 @@ O sistema visa ser robusto, escalável e seguir boas práticas de desenvolviment
 
 -----------
 
-## **📌 Schedule Manager - Setup Local com Docker**
-
-Este projeto é uma aplicação **NestJS** que utiliza **PostgreSQL** como bancos de dados.
----
+### **🚀 Rodando o Projeto**  
 
 ## **🔧 Pré-requisitos**
 Antes de começar, certifique-se de ter instalado:
 
-
 - [Node.js 20+](https://nodejs.org/)
 - [pnpm](https://pnpm.io/) (ou `npm` / `yarn`)
-- [Docker](https://www.docker.com/)
-- [Docker Compose](https://docs.docker.com/compose/)
+- [PostgreSQL](https://www.postgresql.org/)
 
 ---
-
-### **🚀 Rodando o Projeto**  
 
 ### **1️⃣ Clone o Repositório**  
 ```sh
@@ -57,7 +52,7 @@ PORT=3030
 DATABASE_HOST=localhost
 DATABASE_PORT=5432
 DATABASE_USERNAME=postgres
-DATABASE_PASSWORD=admin
+DATABASE_PASSWORD=suasenha
 DATABASE_NAME=schedule_db
 DATABASE_SYNCHRONIZE=true
 
@@ -81,55 +76,49 @@ npm run start:dev  # Modo desenvolvimento (hot reload)
 
 ---
 
-### **4️⃣ Suba os Containers com Docker**  
-Caso prefira utilizar **Docker**, rode o seguinte comando:  
+### **4️⃣ Baixando e Instalando o PostgreSQL 13**
+
+Para instalar o PostgreSQL 13, siga as instruções abaixo conforme o seu sistema operacional:
+
+#### **Windows**
+1. Acesse a página de downloads oficial do PostgreSQL:  
+   [PostgreSQL Downloads para Windows](https://www.postgresql.org/download/windows/)
+2. Baixe o instalador executável.
+3. Siga as instruções do assistente de instalação. Durante a instalação, escolha a versão 13.
+4. Após a instalação, o PostgreSQL será executado como um serviço, e você pode acessá-lo usando o `pgAdmin` ou a linha de comando.
+
+#### **Linux**
+Para distribuições baseadas em Debian/Ubuntu, use o seguinte comando para instalar a versão 13:
 ```sh
-docker-compose up -d
+sudo apt update
+sudo apt install postgresql-13 postgresql-client-13
 ```
-Isso irá:  
-✅ Criar os containers do **NestJS** e **PostgreSQL**
-✅ Configurar os bancos de dados automaticamente  
-✅ Disponibilizar a API em **http://localhost:3030**  
+
+Para outras distribuições, acesse a página oficial de instalação para seguir as instruções detalhadas:
+[PostgreSQL Downloads para Linux](https://www.postgresql.org/download/)
+
+#### **macOS**
+1. Você pode usar o [Homebrew](https://brew.sh/) para instalar o PostgreSQL 13:
+   ```sh
+   brew install postgresql@13
+   ```
+2. Após a instalação, inicie o serviço com o comando:
+   ```sh
+   brew services start postgresql@13
+   ```
 
 ---
 
 ### **5️⃣ Acesse os Bancos de Dados**  
+Após ter o PostgreSQL instalado e configurado, você pode acessar o banco de dados usando as seguintes configurações:
+
 - **PostgreSQL**  
   - **Host:** `localhost`  
   - **Porta:** `5432`  
   - **Usuário:** `postgres`  
-  - **Senha:** `admin`  
+  - **Senha:** `sua senha`  
   - **Banco:** `schedule_db`  
-  - **GUI:** Use o [pgAdmin](https://www.pgadmin.org/) ou [DBeaver](https://dbeaver.io/)  
-
----
-
-## **🛠️ Comandos Úteis**
-📌 **Ver logs do NestJS**  
-```sh
-docker logs -f schedule_manager_app
-```
-
-📌 **Acessar o container do PostgreSQL**  
-```sh
-docker exec -it schedule_manager_postgres psql -U postgres -d schedule_db
-```
-
-📌 **Acessar o container do MongoDB**  
-```sh
-docker exec -it schedule_manager_mongo mongosh
-```
-
-📌 **Derrubar os containers**  
-```sh
-docker-compose down
-```
-
-📌 **Recriar os containers do zero**  
-```sh
-docker-compose down -v
-docker-compose up --build -d
-```
+  - **GUI:** Use o [pgAdmin](https://www.pgadmin.org/) ou [DBeaver](https://dbeaver.io/) para uma interface gráfica amigável.
 
 ---
 
@@ -141,6 +130,9 @@ curl http://localhost:3030/
 ```
 
 Ou use o **Postman** / **Insomnia** para testar as rotas da aplicação.
+
+Ou ainda, utilize o *Swagger API*
+- **URL**: `http://localhost:3030/docs#/`
 
 ---
 
