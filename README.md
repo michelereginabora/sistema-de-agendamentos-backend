@@ -131,13 +131,14 @@ curl http://localhost:3030/
 
 Ou use o **Postman** / **Insomnia** para testar as rotas da aplicação.
 
-Ou ainda, utilize o *Swagger API*
-- **URL**: `http://localhost:3030/docs#/`
+Ou ainda, utilize o *Swagger API*:
+
+```sh
+curl http://localhost:3030/docs#/
+```
 
 ---
 
 ## **📚 Referências**
 - [NestJS](https://nestjs.com/)
-- [Docker](https://www.docker.com/)
 - [PostgreSQL](https://www.postgresql.org/)
-- [MongoDB](https://www.mongodb.com/)
