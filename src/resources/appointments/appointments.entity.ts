@@ -7,7 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm'
 
-import { Service } from 'src/resources/services/service.entity'
+import { Service } from 'src/resources/services/entities/service.entity'
 import { User } from '../user/entities/user.entity'
 
 @Entity('appointments')

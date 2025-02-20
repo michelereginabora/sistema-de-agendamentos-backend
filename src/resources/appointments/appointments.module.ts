@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { Appointment } from './appointments.entity'
 import { AppointmentController } from './appointments.controller'
 import { AppointmentService } from './appointments.service'
-import { Service } from 'src/resources/services/service.entity'
+import { Service } from 'src/resources/services/entities/service.entity'
 import { User } from '../user/entities/user.entity'
 
 @Module({
