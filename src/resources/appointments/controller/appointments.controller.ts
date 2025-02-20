@@ -1,9 +1,9 @@
 import { Controller, Get, Post, Body, UseGuards, Request } from '@nestjs/common'
-import { AppointmentService } from './appointments.service'
 import { JwtAuthGuard } from 'src/auth/guard/jwt-auth.guard'
-import { CreateAppointmentDto } from './dto/create-appointments.dto'
 import { ApiBearerAuth } from '@nestjs/swagger'
 import { RequestWithUser } from 'src/utils/requestWithUser'
+import { CreateAppointmentDto } from '../dto/create-appointments.dto'
+import { AppointmentService } from '../services/appointments.service'
 
 @Controller('appointments')
 @UseGuards(JwtAuthGuard)

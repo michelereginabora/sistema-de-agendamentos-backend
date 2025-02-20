@@ -2,18 +2,18 @@
 
 Este projeto é um **Desafio Técnico** para o desenvolvimento de um **Sistema de Agendamentos**, onde usuários podem marcar horários para serviços específicos.  
 
-O objetivo é mostrar habilidades em:  
-✅ **NestJS** para construção da API (backend)  
-✅ **React/Next.js** para a interface do usuário (frontend)  
+O objetivo é mostrar habilidades em:   
+✅ **NestJS** para construção da API (backend)   
+✅ **React/Next.js** para a interface do usuário ([frontend](https://github.com/michelereginabora/sistema-de-agendamentos-frontend))
 ✅ **Modelagem de banco de dados** com **PostgreSQL**
-✅ **Implementação de regras de negócio** para garantir um fluxo seguro e eficiente  
+✅ **Implementação de regras de negócio** para garantir um fluxo seguro e eficiente
 
 O sistema visa ser robusto, escalável e seguir boas práticas de desenvolvimento. 🚀
 
 ## Links de Documentação
 
 ### Swagger API
-- **URL**: `http://localhost:{porta}/docs#/`
+- **URL**: `http://localhost:3030/docs#/`
 - Documentação interativa da API
 - Testes de endpoints
 - Descrição dos schemas

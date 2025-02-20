@@ -295,6 +295,7 @@ Lançada quando há violações nas regras de negócio:
 #### NotFoundException
 Lançada quando o serviço solicitado não existe.
 
+Os métodos e pastas estão divididos conforme os princípios de Clean Code
 ________________________________________________________________________________
 
 ## Módulo de Disponibilidade de Horários (availability)
@@ -352,3 +353,4 @@ Converte datas de agendamento em slots de tempo normalizados.
 #### minutesToTime()
 Método utilitário para converter minutos em string de tempo formatada.
 
+Os métodos e pastas estão divididos conforme os princípios de Clean Code
