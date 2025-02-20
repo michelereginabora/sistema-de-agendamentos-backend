@@ -7,7 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { CreateAppointmentDto } from './dto/create-appointments.dto'
 import { Appointment } from './appointments.entity'
-import { Service } from 'src/resources/services/service.entity'
+import { Service } from 'src/resources/services/entities/service.entity'
 
 @Injectable()
 export class AppointmentService {
