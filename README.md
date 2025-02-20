@@ -24,6 +24,9 @@ O sistema visa ser robusto, escalável e seguir boas práticas de desenvolviment
 - **GitHub**: [Link para documentação completa](https://github.com/michelereginabora/sistema-de-agendamentos-backend/blob/main/DOC.md)
 - Detalhamento técnico
 
+### TUTORIAL
+- Instruções de uso: [Tutorial](https://github.com/michelereginabora/sistema-de-agendamentos-backend/blob/main/TUTORIAL.md)
+
 -----------
 
 ### **🚀 Rodando o Projeto**  
@@ -133,12 +136,11 @@ Ou use o **Postman** / **Insomnia** para testar as rotas da aplicação.
 
 Ou ainda, utilize o *Swagger API*:
 
-```sh
-curl http://localhost:3030/docs#/
-```
+[http://localhost:3030/docs#/](http://localhost:3030/docs#/)
 
 ---
 
 ## **📚 Referências**
 - [NestJS](https://nestjs.com/)
 - [PostgreSQL](https://www.postgresql.org/)
+- [TypeORM](https://typeorm.io/)
