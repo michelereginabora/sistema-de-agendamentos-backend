@@ -1,6 +1,7 @@
 import { Controller, Get, Query } from '@nestjs/common'
-import { AvailabilityService } from './availability.service'
-import { AvailabilityResponse } from './interfaces/availability-response.interface'
+import { AvailabilityResponse } from '../interfaces/availability-response.interface'
+import { AvailabilityService } from '../services/availability.service'
+
 
 @Controller('availability')
 export class AvailabilityController {
