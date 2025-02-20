@@ -21,4 +21,8 @@ export class ServiceRepository implements IServiceRepository {
     const service = this.repository.create(data);
     return this.repository.save(service);
   }
+
+  async findOne(id: string): Promise<IService | null> {
+    return this.repository.findOneBy({ id });
+  }
 }

@@ -2,30 +2,30 @@ import {
   Injectable,
   BadRequestException,
   NotFoundException,
+  Inject,
 } from '@nestjs/common'
-import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
-import { CreateAppointmentDto } from './dto/create-appointments.dto'
-import { Appointment } from './appointments.entity'
+import { CreateAppointmentDto } from '../dto/create-appointments.dto'
 import { Service } from 'src/resources/services/entities/service.entity'
+import { IAppointmentRepository } from '../interfaces/appointment-repository.interface'
+import { IAppointment } from '../interfaces/appointment.interface'
+import { IServiceRepository } from 'src/resources/services/interfaces/service-repository.interface'
 
 @Injectable()
 export class AppointmentService {
   constructor(
-    @InjectRepository(Appointment)
-    private appointmentRepository: Repository<Appointment>,
-    @InjectRepository(Service)
-    private servicesRepository: Repository<Service>
+    @Inject('IAppointmentRepository')
+    private readonly appointmentRepository: IAppointmentRepository,
+    @Inject('IServiceRepository')
+    private readonly servicesRepository: IServiceRepository
   ) {}
 
   async createAppointment(
     userId: string,
     serviceId: string,
     appointmentData: CreateAppointmentDto
-  ) {
+  ): Promise<IAppointment> {
     await this.validateUser(userId)
-
-    await this.validateService(appointmentData.serviceId)
+    await this.validateService(serviceId)
 
     const appointmentDate = new Date(appointmentData.appointmentDate)
     this.validateAppointmentDate(appointmentDate)
@@ -35,30 +35,28 @@ export class AppointmentService {
       serviceId,
       appointmentDate
     )
+    await this.validateExistingServiceAppointment(serviceId, appointmentDate)
 
-    await this.validateExistingServiceAppointment(
-      appointmentData.serviceId,
-      appointmentDate
-    )
-
-    return this.appointmentRepository.save({
+    const appointmentToSave: Partial<IAppointment> = {
+      ...appointmentData,
       userId,
       serviceId,
       appointmentDate,
-    })
+    }
+
+    return this.appointmentRepository.save(appointmentToSave as IAppointment)
   }
 
-  private async validateUser(userId: string) {
-    const user = await this.appointmentRepository.findOne({
-      where: { userId },
-    })
-    return user
+  private async validateUser(userId: string): Promise<void> {
+    const userAppointments =
+      await this.appointmentRepository.findByUserId(userId)
+    if (!userAppointments) {
+      throw new NotFoundException('Usuário não encontrado')
+    }
   }
 
   private async validateService(serviceId: string): Promise<Service> {
-    const service = await this.servicesRepository.findOne({
-      where: { id: serviceId },
-    })
+    const service = await this.servicesRepository.findOne(serviceId)
 
     if (!service) {
       throw new NotFoundException('Serviço inexistente')
@@ -68,7 +66,6 @@ export class AppointmentService {
 
   private validateAppointmentDate(appointmentDate: Date): void {
     const currentDate = new Date()
-
     if (appointmentDate < currentDate) {
       throw new BadRequestException(
         'Não é possível agendar para uma data passada'
@@ -76,8 +73,11 @@ export class AppointmentService {
     }
   }
 
-  private calculateAppointmentEndTime(appointment: Appointment): Date {
+  private calculateAppointmentEndTime(appointment: IAppointment): Date {
     const appointmentEndTime = new Date(appointment.appointmentDate)
+    if (!appointment.service) {
+      throw new BadRequestException('Serviço não encontrado no agendamento')
+    }
     appointmentEndTime.setMinutes(
       appointmentEndTime.getMinutes() + appointment.service.duration
     )
@@ -91,11 +91,8 @@ export class AppointmentService {
   ): Promise<void> {
     await this.validateService(serviceId)
 
-    const existingAppointments = await this.appointmentRepository
-      .createQueryBuilder('appointment')
-      .leftJoinAndSelect('appointment.service', 'service')
-      .where('appointment.userId = :userId', { userId })
-      .getMany()
+    const existingAppointments =
+      await this.appointmentRepository.findByUserIdWithService(userId)
 
     for (const existingAppointment of existingAppointments) {
       const existingAppointmentEndTime =
@@ -118,11 +115,8 @@ export class AppointmentService {
   ): Promise<void> {
     await this.validateService(serviceId)
 
-    const existingAppointments = await this.appointmentRepository
-      .createQueryBuilder('appointment')
-      .leftJoinAndSelect('appointment.service', 'service')
-      .where('appointment.serviceId = :serviceId', { serviceId })
-      .getMany()
+    const existingAppointments =
+      await this.appointmentRepository.findByServiceIdWithService(serviceId)
 
     for (const existingAppointment of existingAppointments) {
       const existingAppointmentEndTime =
@@ -138,11 +132,8 @@ export class AppointmentService {
       }
     }
   }
-  async findUserAppointments(userId: string) {
-    return this.appointmentRepository.find({
-      where: { userId },
-      relations: ['service'],
-      order: { appointmentDate: 'ASC' },
-    })
+
+  async findUserAppointments(userId: string): Promise<IAppointment[]> {
+    return this.appointmentRepository.findByUserIdWithService(userId)
   }
 }
